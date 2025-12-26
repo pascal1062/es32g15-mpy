@@ -48,7 +48,7 @@ def exec():
     client.set_hreg(0,int(round(plc.T2.value,2)*100))
     client.set_hreg(1,int(round(plc.T1.value,2)*100))
     client.set_hreg(2,int(plc.PH4.value))
-    client.set_hreg(3,int(plc.VI1.value))
+    client.set_hreg(3,int(round(plc.VI1.value,2)*100))
 
     #RTC registers 
     YEAR = client.get_hreg(10)

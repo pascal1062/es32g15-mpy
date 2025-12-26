@@ -1,7 +1,7 @@
 '''
     Analog Input Configuration, Thermistor 10K type III, 10Kohms @ 25 DegC
     volts vs Celsius
-    Pull-up 5V
+    Pull-Down 3.3V
 '''
 
 SCALE_RANGE = (

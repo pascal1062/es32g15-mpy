@@ -6,6 +6,7 @@ from machine import Pin, ADC
 import ntc10KDegC_B3950 as aic10KB
 import aicPhotocell as aicPhoto
 import aicVin010V as aic010V
+import therm10KDegCVIN10V as aic10K10V
 import math
 import time
 
@@ -254,7 +255,9 @@ T2.first_value()
 PH4 = AnalogInput(4, "photocell", 90.0, 0, 32, aicPhoto, "11DB") 
 PH4.first_value()
 
-VI1 = AnalogInput(4, "volt_1", 90.0, 0, 36, aic010V, "6DB") 
+#VI1 = AnalogInput(4, "volt_1", 90.0, 0, 36, aic010V, "6DB")
+VI1 = AnalogInput(5, "volt_1", 90.0, 0, 36, aic10K10V, "6DB")
+VI1.first_value()
 
 IN1 = BinaryInput(1, "DI1", 19)
 IN1.value
