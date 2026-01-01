@@ -35,7 +35,7 @@ CH3 = RelayOutput(1, "Relay_3", 21); CH3.value = False
 CH4 = RelayOutput(1, "Relay_4", 23); CH4.value = False
 
 VO1 = AnalogOutput(1, "AO1", 25); VO1.value = 0
-VO1 = AnalogOutput(2, "AO2", 26); VO2.value = 0
+VO2 = AnalogOutput(2, "AO2", 26); VO2.value = 0
 
 SCAN_LED = Pin(15, Pin.OUT)
 SCAN_LED.on()

@@ -53,6 +53,8 @@ def exec():
  si l'heure est synchronisé avec une date inférieure, les timers ne fonctionnent plus
  il faudrait resetter tous les timers dans mes programmes
  
- scanner les entrées qui ne sont pas dans un pg
+ scanner les entrées qui ne sont pas dans un pg --Fait--
+ 
+ faire du logging
 
 '''

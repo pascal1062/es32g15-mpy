@@ -75,9 +75,9 @@ def exec():
             if msg['id'] == "sys" and msg['val'] == "rst": _stop()
             if msg['id'] == "sys" and msg['val'] == "tsync": xchg.send_recv({"date-time":"sync"})
 
-            if msg['id'] == "CH4" and msg['val'] == "On": plc.CH4.value = True
-            if msg['id'] == "CH4" and msg['val'] == "Off": plc.CH4.value = False
-            if msg['id'] == "BV1" and msg['val'] == "On": plc.START_CH1.value = True
+            if msg['id'] == "CH4" and msg['val'] == "On": plc.CH4.value = True if msg['val'] == "On" else False
+            if msg['id'] == "BV1" and msg['val'] == "On": plc.START_CH1.value = True if msg['val'] == "On" else False
+            if msg['id'] == "VO1" and type(msg['val']) is int and 0 <= msg['val'] <= 100: plc.VO1.value = msg['val']  
     except:
         pass
 

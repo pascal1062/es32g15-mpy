@@ -23,6 +23,7 @@ class BinaryValue():
             return
 
     def changed(self):
+        self.value
         if self._newvalue != self._lastvalue:
             val = True
         else:
@@ -31,19 +32,21 @@ class BinaryValue():
         return val
 
     def rising(self):
-        if (self._newvalue != self._lastvalue) and (self._newvalue == True):
-            val = True
-            self._lastvalue = self._newvalue
+        self.value
+        if self._newvalue != self._lastvalue:
+            val = self._newvalue
         else:
             val = False
+        self._lastvalue = self._newvalue
         return val
 
     def falling(self):
-        if (self._newvalue != self._lastvalue) and (self._newvalue == False):
-            val = True
-            self._lastvalue = self._newvalue
+        self.value
+        if (self._newvalue != self._lastvalue):
+            val = not self._newvalue
         else:
             val = False
+        self._lastvalue = self._newvalue
         return val
 
     #Set Property

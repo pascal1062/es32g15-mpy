@@ -10,6 +10,7 @@ xfer._boot()
 
 while True:
 
+    plc.scan()
     xfer.exec()
     pg1.exec()
     pg2.exec()
