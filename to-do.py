@@ -55,6 +55,17 @@ def exec():
  
  scanner les entrées qui ne sont pas dans un pg --Fait--
  
+ Analog output .value retour 0-100 au lien de 0-255
+ 
  faire du logging
+ 
+ rename data_exchange-ser to rx_tx.py
+ 
+ 
 
 '''
+
+{"T1":plc.T1.value, "T2":plc.T2.value, "PHOTO":plc.PH4.value, "VI1":plc.VI1.value, "DI1":plc.IN1.value, 
+ "CH1":plc.CH1.value, "CH2":plc.CH2.value, "CH3":plc.CH3.value, "CH4":plc.CH4.value, "AO1":plc.VO1.value, 
+ "AO2":plc.VO2.value, "BV1":START_CH1.value
+}

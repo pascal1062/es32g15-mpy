@@ -56,6 +56,10 @@ def actualTime(t):
 
 #main execution
 def exec():
+    plc_obj = {"T1":plc.T1.value, "T2":plc.T2.value, "PHOTO":plc.PH4.value, "VI1":plc.VI1.value, "DI1":plc.IN1.value, 
+               "CH1":plc.CH1.value, "CH2":plc.CH2.value, "CH3":plc.CH3.value, "CH4":plc.CH4.value, "AO1":plc.VO1.value, 
+               "AO2":plc.VO2.value, "BV1":plc.START_CH1.value}
+    
     read = xchg.send_recv()
     try:
         msg = json.loads(read.decode("utf8"))
@@ -66,6 +70,7 @@ def exec():
         if msg['brd'] == 1 and msg['req'] == "get":
             if msg['id'] == "sys" and msg['val'] == "time": xchg.send_recv({"date-time":str(actualTime(time.localtime()))})
 
+            if msg['id'] == "PLC" and msg['val'] == "null": xchg.send_recv(plc_obj)
             if msg['id'] == "T1" and msg['val'] == "null": xchg.send_recv({"T1":plc.T1.value})
             if msg['id'] == "T2" and msg['val'] == "null": xchg.send_recv({"T2":plc.T2.value})
             if msg['id'] == "VI1" and msg['val'] == "null": xchg.send_recv({"VI1":plc.VI1.value})
@@ -75,8 +80,8 @@ def exec():
             if msg['id'] == "sys" and msg['val'] == "rst": _stop()
             if msg['id'] == "sys" and msg['val'] == "tsync": xchg.send_recv({"date-time":"sync"})
 
-            if msg['id'] == "CH4" and msg['val'] == "On": plc.CH4.value = True if msg['val'] == "On" else False
-            if msg['id'] == "BV1" and msg['val'] == "On": plc.START_CH1.value = True if msg['val'] == "On" else False
+            if msg['id'] == "CH4" and type(msg['val']) is bool: plc.CH4.value = msg['val']
+            if msg['id'] == "BV1" and type(msg['val']) is bool: plc.START_CH1.value = msg['val']
             if msg['id'] == "VO1" and type(msg['val']) is int and 0 <= msg['val'] <= 100: plc.VO1.value = msg['val']  
     except:
         pass
@@ -86,6 +91,6 @@ def exec():
         xchg.send_recv({"date-time":"sync"})
 
     if timer1.every(1):
-        xchg.send_recv({"date-time":str(actualTime(time.localtime()))})
+        xchg.send_recv(plc_obj)
 
 #End
