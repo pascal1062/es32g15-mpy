@@ -11,6 +11,7 @@ class DoEvery():
         
     def every(self, t):
         val = False
+        if (time.time() - self._end) < 0: self._end = time.time()
         if self._unit == "sec":
             if (time.time() - self._end) >= t:
                 self._end = time.time()
