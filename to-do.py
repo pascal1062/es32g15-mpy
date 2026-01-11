@@ -50,9 +50,6 @@ def exec():
 
 #To-Do
 '''
- si l'heure est synchronisé avec une date inférieure, les timers ne fonctionnent plus
- il faudrait resetter tous les timers dans mes programmes
- 
  scanner les entrées qui ne sont pas dans un pg --Fait--
  
  Analog output .value retour 0-100 au lien de 0-255
@@ -61,8 +58,6 @@ def exec():
  
  rename data_exchange-ser to rx_tx.py
  
- 
-
 '''
 
 {"T1":plc.T1.value, "T2":plc.T2.value, "PHOTO":plc.PH4.value, "VI1":plc.VI1.value, "DI1":plc.IN1.value, 

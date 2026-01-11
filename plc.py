@@ -18,16 +18,12 @@ import therm10KDegCVIN10V as aic10K10V
 
 
 #ES32 Board input-output definitions
-#T1 = ThermistorInput(1, "temp_test", 95.0, -0.1, 14, 0.001129148, 0.000234125, 8.76741E-08) #B3950
-#T1 = ThermistorInput(1, "sondeB3950", 90.0, 0, 14, 1.284850279E-3, 2.076544735E-4, 2.004280704E-07) #B3950
-#T2 = ThermistorInput(2, "temp_ss", 90.0, -0.1, 27, 1.027280419e-3, 2.394255475e-4, 1.555646371e-7); T2.first_value()
-
-T1 = AnalogInput(1, "sondeB3950", 90.0, 0, 14, aic10KB, "11DB"); T1.first_value()
-T2 = AnalogInput(2, "sonde10K", 90.0, 0, 27, aic10K, "11DB"); T2.first_value()
-PH4 = AnalogInput(4, "photocell", 90.0, 0, 32, aicPhoto, "11DB"); PH4.first_value()
+T1 = AnalogInput(1, "sondeB3950", 90.0, -0.38, 0.045, 14, aic10KB, "11DB"); T1.first_value()
+T2 = AnalogInput(2, "sonde10K", 90.0, -0.38, 0.045, 27, aic10K, "11DB"); T2.first_value()
+PH4 = AnalogInput(4, "photocell", 90.0, 0, 0.045, 32, aicPhoto, "11DB"); PH4.first_value()
 
 #VI1 = AnalogInput(4, "volt_1", 90.0, 0, 36, aic010V, "6DB")
-VI1 = AnalogInput(5, "volt_1", 90.0, 0, 36, aic10K10V, "6DB"); VI1.first_value()
+VI1 = AnalogInput(5, "volt_1", 90.0, 1.26, 0.015, 36, aic10K10V, "6DB"); VI1.first_value()
 
 IN1 = BinaryInput(1, "DI1", 19); IN1.value
 

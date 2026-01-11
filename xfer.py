@@ -7,7 +7,8 @@ from machine import RTC
 from data_exchange_ser import DataExchange
 
 # serial data exchange
-xchg = DataExchange(1,57600,0,2)
+#xchg = DataExchange(1,57600,0,2)
+xchg = DataExchange(1,38400,0,2)
 
 #variable
 timer1 = DoEvery("timer1", "min")

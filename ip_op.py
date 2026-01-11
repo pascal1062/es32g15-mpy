@@ -74,18 +74,18 @@ class ThermistorInput():
     
 class AnalogInput():
     #AnalogInput class. ADC GPIO I014-IO27-IO33-IO32  OR  ADC 0-10V GPIO IO36-IO39 4-20mA IO34-IO35
-    def __init__(self, instance, name, filtr, calib, pin, scale, attn):
+    def __init__(self, instance, name, filtr, calibT, calibV, pin, scale, attn):
         self._pin = pin
         self._adc = ADC(Pin(pin))
         self._instance = instance
         self._name = name
         self._scale = scale
         self._filter = filtr
-        self._calibration = calib
+        self._calibration = calibT
         self._presentvalue = 0.0
         self._newvalue = 0.0
         self._lastvalue = 0.0
-        self._vadj = 45000
+        self._vadj = calibV * 1000000
         if attn == "0DB": self._adc.atten(ADC.ATTN_0DB) #1.00V
         if attn == "2_5DB": self._adc.atten(ADC.ATTN_2_5DB) #1.34V
         if attn == "6DB": self._adc.atten(ADC.ATTN_6DB) #2.00V

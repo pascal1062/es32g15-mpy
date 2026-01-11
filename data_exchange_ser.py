@@ -42,24 +42,27 @@ class DataExchange():
         self._data_in = None
         self._rcvd_str = None
         self._data_out = msg
-        events = self._poller.poll(1)
+        events = self._poller.poll(25)
         if events:
             for obj, event in events:
+                if event & select.POLLOUT:
+                    if self._data_out is not None: 
+                        #print(self._data_out)
+                        self._uart.write(ujson.dumps(self._data_out))
+                        self._uart.write('\n')
+                        if hasattr(self._uart, 'flush'): self._uart.flush() 
+                        self._data_out = None
                 if event & select.POLLIN:
                     if self._uart.any():
                         char = self._uart.read(1)
                         if char != b'!':
                             self._buffer += char
+                            #print(self._buffer)
                         else:    
                             self._data_in = self._buffer
                             self._buffer = b''
-                if event & select.POLLOUT:
-                    if self._data_out is not None: 
-                        self._uart.write(ujson.dumps(self._data_out))
-                        self._uart.write('\n')
-                        self._data_out = None
+                            #print(self._data_in)
 
-            
             return self._data_in
 
 #Fin
