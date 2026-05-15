@@ -1,5 +1,5 @@
 '''
-    ES32G15 board PLC inputs / outputs definitions
+    ES32G15 board PLC inputs / outputs / variables definitions
 '''
 
 from machine import Pin, ADC
@@ -27,18 +27,24 @@ VI1 = AnalogInput(5, "volt_1", 90.0, 1.26, 0.015, 36, aic10K10V, "6DB"); VI1.fir
 
 IN1 = BinaryInput(1, "DI1", 19); IN1.value
 
-CH1 = RelayOutput(1, "Relay_1", 12); CH1.value = False
-CH2 = RelayOutput(1, "Relay_2", 13); CH2.value = False
-CH3 = RelayOutput(1, "Relay_3", 21); CH3.value = False
-CH4 = RelayOutput(1, "Relay_4", 23); CH4.value = False
+CH1 = RelayOutput(1, "Relay_1", 12) #pompe irrig. start avec IN1 ou BV1
+CH2 = RelayOutput(1, "Relay_2", 13) #heating panel
+CH3 = RelayOutput(1, "Relay_3", 21) #pool pump
+CH4 = RelayOutput(1, "Relay_4", 23) #for testing through xfer
 
-VO1 = AnalogOutput(1, "AO1", 25); VO1.value = 0
-VO2 = AnalogOutput(2, "AO2", 26); VO2.value = 0
+VO1 = AnalogOutput(1, "AO1", 25)
+VO2 = AnalogOutput(2, "AO2", 26)
 
 SCAN_LED = Pin(15, Pin.OUT)
 SCAN_LED.on()
 
 START_CH1 = BinaryValue(1, "START_CH1")
+
+IRRIG_PUMP_TIME = AnalogValue(1, "IRRIG_TIME"); IRRIG_PUMP_TIME.write(1)
+IRRIG_ELAPS_TIME = AnalogValue(2, "IRRIG_TIME")
+POOL_ON_TIME = AnalogValue(3, "POOL_ON"); POOL_ON_TIME.write(600)
+POOL_OFF_TIME = AnalogValue(4, "POOL_OFF"); POOL_OFF_TIME.write(2100)
+
 
 def scan():
     T1.value; T2.value; PH4.value

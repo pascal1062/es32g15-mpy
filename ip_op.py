@@ -196,21 +196,36 @@ class RelayOutput():
     #BinaryOutput class. GPIO I012-IO13-IO21-IO23
     def __init__(self, instance, name, pin):
         self._pin = Pin(pin, Pin.OUT)
+        self._pin.value(0)
         self._instance = instance
         self._name = name
-        self._newvalue = None
-        self._lastvalue = None
+        self._priority_array = {i: None for i in range(1, 17)}
+        self._relinquish_default = True if self._pin.value() == 1 else False
+        self._newvalue = self._relinquish_default
+        self._lastvalue = self._relinquish_default
          
     def get_name(self):
-        return self._name    
+        return self._name
+    
+    def get_priority_array(self):
+        return self._priority_array 
 
     def get_value(self):
-        return self._newvalue
-
-    def set_value(self, val):
-        if isinstance(val, bool):
-            self._newvalue = val
-            self._pin.on() if self._newvalue else self._pin.off()
+        for i in range(1, 17):
+            val = self._priority_array[i]
+            if val is not None:
+                return val
+        return self._relinquish_default
+    
+    def update_value(self):
+        logic_state = self.get_value()
+        self._newvalue = True if logic_state == True else False
+        self._pin.on() if self._newvalue else self._pin.off()
+    
+    def write(self, val, priority=10):
+        if isinstance(val, bool) or val is None:
+            self._priority_array[priority] = val
+            self.update_value()            
         else:
             return
 
@@ -238,32 +253,51 @@ class RelayOutput():
             val = False
         return val
 
-    #Set Property
-    value = property(get_value, set_value)
+    #Get Property
+    value = property(get_value)
     name = property(get_name)
+    priority = property(get_priority_array)
 
 
 class AnalogOutput():
     #AnalogOutput class. (0-10V or 4-20Ma set on dip switch) GPIO IO25-IO26
     def __init__(self, instance, name, pin):
         self._dac = DAC(Pin(pin))
+        self._dac.write(0)
         self._instance = instance
         self._name = name
-        self._newvalue = None
-        self._lastvalue = None
+        self._priority_array = {i: None for i in range(1, 17)}
+        self._relinquish_default = 0
+        self._newvalue = 0
+        self._lastvalue = 0
          
     def get_name(self):
         return self._name    
 
     def get_value(self):
         return self._newvalue
-
-    def set_value(self, val):
-        if isinstance(val, int):
-            slp = int((val - 0) * (255 - 0) / (100 - 0) + 0)
-            slp = max(0, min(slp, 255))
-            self._newvalue = slp
-            self._dac.write(slp)
+    
+    def get_priority_array(self):
+        return self._priority_array
+    
+    def get_value(self):
+        for i in range(1, 17):
+            val = self._priority_array[i]
+            if val is not None:
+                return val
+        return self._relinquish_default
+    
+    def update_value(self):
+        prio_value = self.get_value()
+        self._newvalue = prio_value
+        slp = int((prio_value - 0) * (255 - 0) / (100 - 0) + 0)
+        slp = max(0, min(slp, 255))
+        self._dac.write(slp)
+        
+    def write(self, val, priority=10):
+        if isinstance(val, int) or val is None:
+            self._priority_array[priority] = val
+            self.update_value()            
         else:
             return
 
@@ -292,8 +326,8 @@ class AnalogOutput():
         return val
 
     #Set Property
-    value = property(get_value, set_value)
+    value = property(get_value)
     name = property(get_name)
+    priority = property(get_priority_array)
     
-
 #End

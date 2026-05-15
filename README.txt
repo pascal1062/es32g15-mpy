@@ -16,7 +16,7 @@ I'm using vscode as the main editor for code creation/editing and also connectio
 I've installed "Remote-SSH" package for remote connection to the raspberry file.
 
 The local PC doesn't have direct access to esp32 !!!
-Pattern: Local-PC vscode <-> access raspberry pi  <-> esp32 serial serial connection
+Pattern: Local-PC vscode <-> access raspberry pi through ssh remote <-> esp32 serial serial connection
 
 1- Launch vscode and remote connect ssh to 192.168.0.173 (SSH: 192.168.0.713 on lower left ... in green)
 2- Open Folder located here "home/pi/Documents/python-venv/myenv1/es32g15/"

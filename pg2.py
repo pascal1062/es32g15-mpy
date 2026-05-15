@@ -1,7 +1,16 @@
 import plc
-#from machine import Pin
-
-#CH2 = Pin(13, Pin.OUT)
+import time
+import sch
+from automation import Automation as func
 
 def exec():
-    plc.CH2.value = True if plc.T2.value < -10 else False
+    #
+    heat = None
+    heat = func.aswitch(heat, plc.T2.value, 5.0, 10.0)
+    plc.CH2.write(heat)
+    #
+    hor = None
+    hor = sch.execute(time.localtime(), int(plc.POOL_ON_TIME.value), int(plc.POOL_OFF_TIME.value))
+    plc.CH3.write(hor)
+    
+#End
